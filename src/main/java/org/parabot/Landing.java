@@ -141,6 +141,10 @@ public final class Landing {
                 case "-skiplogin":
                     Core.setSkipLogin(true);
                     break;
+                case "-uuid":
+                    Core.quickLaunchByUuid = Integer.parseInt(args[++i]);
+                    break;
+
             }
         }
     }
