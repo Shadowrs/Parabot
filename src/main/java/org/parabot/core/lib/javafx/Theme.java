@@ -1,21 +1,21 @@
 package org.parabot.core.lib.javafx;
 
+import java.io.File;
+import java.net.URL;
 import org.parabot.core.Core;
 import org.parabot.core.Directories;
 import org.parabot.core.build.BuildPath;
 import org.parabot.core.lib.Library;
 import org.parabot.environment.api.utils.JavaUtil;
 
-import java.io.File;
-import java.net.URL;
-
 /**
  * Jython util class
  *
  * @author Everel
  */
-public class JavaFX extends Library {
+public class Theme extends Library {
     private static boolean valid;
+    private final String name = "Theme";
 
     public static boolean isValid() {
         return valid;
@@ -24,22 +24,23 @@ public class JavaFX extends Library {
     @Override
     public void init() {
         if (!hasJar()) {
-            System.err.println("Failed to load javafx... [jar missing]");
+            System.err.println("Failed to load "+name+"... [jar missing]");
             return;
         }
-        Core.verbose("Adding javafx jar file to build path: "
+        Core.verbose("Adding "+name+" jar file to build path: "
                 + getJarFileURL().getPath());
         BuildPath.add(getJarFileURL());
 
         try {
-            Class.forName("javafx.application.Application");
+            // Test
+            Class.forName("org.jvnet.substance.SubstanceBorder");
             valid = true;
         } catch (ClassNotFoundException e) {
             System.err
-                    .println("Failed to add javafx to build path, or incorrupt download");
+                    .println("Failed to add "+name+" to build path, or incorrupt download");
         }
 
-        Core.verbose("JavaFX initialized.");
+        Core.verbose(name+" initialized.");
     }
 
     @Override
@@ -49,23 +50,22 @@ public class JavaFX extends Library {
 
     @Override
     public File getJarFile() {
-        return new File(Directories.getCachePath(), "javafx.jar");
+        return new File(Directories.getCachePath(), name+".jar");
     }
 
     @Override
     public URL getDownloadLink() {
         try {
-            return new URL("http://bot.parabot.org/libs/jfxrt.jar");
+            return new URL("file:C:/Users/Jak/Documents/Parabot/other/Theme.jar");
         } catch (Throwable t) {
             t.printStackTrace();
         }
         return null;
     }
 
-    // JavaFX is bunled inside the JDK from 1.8
     @Override
     public boolean requiresJar() {
-        return JavaUtil.JAVA_VERSION <= 1.7;
+        return true;
     }
 
     @Override

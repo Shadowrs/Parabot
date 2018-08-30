@@ -4,6 +4,7 @@ import org.parabot.core.Core;
 import org.parabot.core.desc.ServerDescription;
 import org.parabot.core.lib.Library;
 import org.parabot.core.lib.javafx.JavaFX;
+import org.parabot.core.lib.javafx.Theme;
 import org.parabot.core.parsers.servers.ServerParser;
 import org.parabot.core.ui.components.VerboseLoader;
 import org.parabot.environment.api.utils.WebUtil;
@@ -21,6 +22,7 @@ public class Environment extends org.parabot.api.io.libraries.Environment {
 
     static {
         libs.add(new JavaFX());
+      //  libs.add(new Theme());
     }
 
     /**
