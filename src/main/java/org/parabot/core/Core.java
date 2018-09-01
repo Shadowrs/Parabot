@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 @SuppressWarnings("Duplicates")
 public class Core {
 
-    public static int quickLaunchByUuid; //
+    public static int quickLaunchByUuid; // used like -server, but denoted by an Int rather than the server name
 	private static boolean debug; // in debug mode, we will print more detailed error messages.
     private static boolean verbose;
     private static boolean dump;
