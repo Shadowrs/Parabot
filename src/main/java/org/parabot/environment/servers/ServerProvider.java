@@ -78,7 +78,11 @@ public abstract class ServerProvider implements Opcodes {
             return;
         }
         for (Injectable inj : injectables) {
-            inj.inject();
+            try {
+                inj.inject();
+            } catch (Exception e) {
+                System.err.println(e.getMessage()+" : "+inj.toString());
+            }
         }
         Context.getInstance().setHookParser(parser);
     }
