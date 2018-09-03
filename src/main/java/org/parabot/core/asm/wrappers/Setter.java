@@ -19,7 +19,10 @@ public class Setter implements Injectable {
     private String    desc;
     private boolean   methodStatic;
 
+    private final String TO_STRING;
+
     public Setter(final String fieldLocation, String into, final String fieldName, final String methodName, final String desc, final boolean methodStatic, final String fieldDesc) {
+        TO_STRING = String.format("%s.%s %s -> %s.%s %s %s", fieldLocation, fieldName, fieldDesc, into, methodName, desc, methodStatic);
         this.fieldLocation = ASMUtils.getClass(fieldLocation);
         into = (into == null) ? fieldLocation : into;
         this.into = ASMUtils.getClass(into);
@@ -52,4 +55,8 @@ public class Setter implements Injectable {
         return new AddSetterAdapter(fieldLocation, into, field, name, desc, methodStatic);
     }
 
+    @Override
+    public String toString() {
+        return TO_STRING;
+    }
 }

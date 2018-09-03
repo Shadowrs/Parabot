@@ -21,6 +21,8 @@ public class Getter implements Injectable {
     private boolean   staticMethod;
     private long      multiplier;
 
+    private final String TO_STRING;
+
     /**
      * @param into          - classnode to inject getter method in
      * @param fieldLocation - classnode where field is located
@@ -34,9 +36,14 @@ public class Getter implements Injectable {
     public Getter(final String into, final String fieldLocation, final String fieldNode,
                   final String methodName, final String returnDesc, final boolean staticMethod, final long multiplier,
                   final String fieldDesc) {
+        TO_STRING = String.format("%s.%s %s -> %s.%s %s | %s %s", fieldLocation, fieldNode, fieldDesc, into, methodName, returnDesc, staticMethod, multiplier);
         this.into = ASMUtils.getClass(into);
         this.fieldLocation = ASMUtils.getClass(fieldLocation);
-        this.fieldNode = ASMUtils.getField(ASMUtils.getClass(fieldLocation), fieldNode, fieldDesc);
+        final ClassNode loc = ASMUtils.getClass(fieldLocation);
+        if (loc == null) {
+            throw new NullPointerException(String.format("Missing getter hook classnode: %s (other info: %s %s %s %s)", fieldLocation, into, fieldNode, methodName, returnDesc));
+        }
+        this.fieldNode = ASMUtils.getField(loc, fieldNode, fieldDesc);
         this.methodName = methodName;
         this.returnDesc = returnDesc == null ? this.fieldNode.desc : returnDesc;
         this.staticMethod = staticMethod;
@@ -50,6 +57,7 @@ public class Getter implements Injectable {
      * @param methodName
      */
     public Getter(final String fieldLocation, final String fieldNode, final String methodName) {
+        TO_STRING = String.format("%s.%s -> %s", fieldLocation, fieldNode, methodName);
         this.into = ASMUtils.getClass(fieldLocation);
         this.fieldLocation = this.into;
         this.fieldNode = ASMUtils.getField(this.into, fieldNode);
@@ -77,4 +85,8 @@ public class Getter implements Injectable {
         return new AddGetterAdapter(into, fieldLocation, fieldNode, methodName, returnDesc, staticMethod, multiplier);
     }
 
+    @Override
+    public String toString() {
+        return TO_STRING;
+    }
 }

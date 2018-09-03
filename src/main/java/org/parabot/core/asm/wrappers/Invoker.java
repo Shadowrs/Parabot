@@ -26,6 +26,8 @@ public class Invoker implements Injectable {
     private String mName;
     private String mDesc;
 
+    private final String TO_STRING;
+
     public Invoker(String methodLoc, String invMethName, String argsDesc,
                    String returnDesc, String methodName) {
         this(methodLoc, methodLoc, invMethName, argsDesc, returnDesc,
@@ -34,6 +36,9 @@ public class Invoker implements Injectable {
 
     public Invoker(String into, String methodLoc, String invMethName,
                    String argsDesc, String returnDesc, String methodName, boolean isInterface, String instanceCast, String argsCheckCastDesc) {
+
+        this.TO_STRING = String.format("[Invoker] %s.%s %s -> %s.%s | %s %s %s", methodLoc, invMethName, argsDesc + returnDesc, into, methodName, isInterface, instanceCast, argsCheckCastDesc);
+
         this.into = ASMUtils.getClass(into);
         this.methodLocation = ASMUtils.getClass(methodLoc);
         this.mn = getMethod(this.methodLocation, invMethName, argsDesc, returnDesc);
@@ -46,6 +51,7 @@ public class Invoker implements Injectable {
         this.mName = invMethName;
         this.mDesc = argsDesc + returnDesc;
         this.argsCheckCastDesc = argsCheckCastDesc;
+
     }
 
     private static MethodNode getMethod(ClassNode into, String name, String argsDesc, String returnDesc) {
@@ -79,4 +85,8 @@ public class Invoker implements Injectable {
                 this.argsDesc, this.returnDesc, this.methodName, this.isInterface, this.instanceCast, this.argsCheckCastDesc);
     }
 
+    @Override
+    public String toString() {
+        return TO_STRING;
+    }
 }

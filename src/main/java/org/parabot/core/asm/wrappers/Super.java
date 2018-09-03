@@ -30,4 +30,8 @@ public class Super implements Injectable {
         return new AddSuperAdapter(className, superClassName);
     }
 
+    @Override
+    public String toString() {
+        return "[Super] "+className+" "+superClassName;
+    }
 }
