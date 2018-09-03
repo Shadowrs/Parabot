@@ -28,8 +28,8 @@ import java.security.NoSuchAlgorithmException;
 @SuppressWarnings("Duplicates")
 public class Core {
 
-    public static int quickLaunchByUuid; // used like -server, but denoted by an Int rather than the server name
-	private static boolean debug; // in debug mode, we will print more detailed error messages.
+    private static int quickLaunchByUuid = -1; // used like -server, but denoted by an Int rather than the server name
+    private static boolean debug; // in debug mode, we will print more detailed error messages.
     private static boolean verbose;
     private static boolean dump;
     private static boolean loadLocal; //Loads both local and public scripts/servers
@@ -41,6 +41,14 @@ public class Core {
 
 
     private static Version currentVersion = Configuration.BOT_VERSION;
+
+    /**
+     * If you want to skip parabot login.
+     * @param skipLogin
+     */
+    public static void setSkipLogin(boolean skipLogin) {
+        Core.skipLogin = skipLogin;
+    }
 
     /**
      * Set if we are to load BDN servers and scripts, or skip.
@@ -61,13 +69,12 @@ public class Core {
         return validate;
     }
 
+    public static int getQuickLaunchByUuid() {
+        return quickLaunchByUuid;
+    }
 
-    /**
-     * If you want to skip parabot login.
-     * @param skipLogin
-     */
-    public static void setSkipLogin(boolean skipLogin) {
-        Core.skipLogin = skipLogin;
+    public static void setQuickLaunchByUuid(int quickLaunchByUuid) {
+        Core.quickLaunchByUuid = quickLaunchByUuid;
     }
 
     /**

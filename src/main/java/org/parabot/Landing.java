@@ -142,7 +142,7 @@ public final class Landing {
                     Core.setSkipLogin(true);
                     break;
                 case "-uuid":
-                    Core.quickLaunchByUuid = Integer.parseInt(args[++i]);
+                    Core.setQuickLaunchByUuid(Integer.parseInt(args[++i]));
                     break;
 
             }
