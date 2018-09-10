@@ -3,6 +3,7 @@ package org.parabot.core.asm.redirect;
 import org.parabot.core.asm.RedirectClassAdapter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class RuntimeRedirect {
 
@@ -23,7 +24,7 @@ public class RuntimeRedirect {
     }
 
     public static Process exec(Runtime r, String[] s) {
-        System.out.println("Blocked attempted command: " + s);
+        System.out.println("Blocked attempted command: " + Arrays.toString(s));
         throw RedirectClassAdapter.createSecurityException();
     }
 
